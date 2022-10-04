@@ -1,11 +1,12 @@
 class User < ApplicationRecord
     validates :username, presence: true, length: { minimum: 4 }
     validates :birthdate, presence: true
-    # before_save :validate_password
+
     validate :validate_password, on: [:create, :update]
     validate :verify_age, on: [ :create, :update]
 
     has_secure_password
+    has_secure_token :auth_token
 
     private
     def validate_password
