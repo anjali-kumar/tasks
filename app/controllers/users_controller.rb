@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
+  skip_before_action :authenticate_user, only: %i[ create ]
 
   # GET /users
   def index
@@ -13,12 +14,13 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # POST /users
+  # POST /users 
+  # Sign up ?
   def create
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: @user, status: :created, location: @user 
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -43,6 +45,7 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+
 
     # Only allow a list of trusted parameters through.
     def user_params
