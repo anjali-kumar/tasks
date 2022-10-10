@@ -8,6 +8,17 @@ class User < ApplicationRecord
     has_secure_password
     has_secure_token :auth_token
 
+    AUTH_TOKEN_VALIDITY = 1.minute
+
+    # def update_auth_token
+    #     auth_token_created_at = Time.now
+    #     regenerate_auth_token
+    # end
+
+    def valid_token?
+        auth_token_created_at + AUTH_TOKEN_VALIDITY > (Time.now)
+    end
+
     private
     def validate_password
         if password == username
