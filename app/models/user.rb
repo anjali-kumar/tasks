@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    has_many :projects
+    
     validates :username, presence: true, length: { minimum: 4 }
     validates :birthdate, presence: true
 
