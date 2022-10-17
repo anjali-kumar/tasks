@@ -1,6 +1,8 @@
 class User < ApplicationRecord
     has_many :projects
-    
+    has_many :created_tasks, class_name: 'Task', foreign_key: 'creator_id' # as creator
+    has_many :assigned_tasks,  class_name: 'Task', foreign_key: 'assignee_id' # as assignee
+
     validates :username, presence: true, length: { minimum: 4 }
     validates :birthdate, presence: true
 
